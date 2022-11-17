@@ -1,15 +1,14 @@
 import pandas as pd
-import numpy as np
+
 import plotly.express as px
 
 import dash
-from dash import dcc
-from dash import html
+from dash import Dash, dcc, html, Input, Output, State
 from dash.dependencies import Input,Output
 
 app = dash.Dash(__name__)
 
-df = pd.read_csv(r"C:\Users\sahas\OneDrive\Documents\visual studio code\dash\Urban_Park_Ranger_Animal_Condition_Response.csv")
+df = pd.read_csv("datasets/Urban_Park_Ranger_Animal_Condition_Response.csv")
 app.layout = html.Div([
 
     html.Div([
@@ -68,11 +67,22 @@ def build_graph(column_chosen):
                       'font':{'size':28},'x':0.5,'xanchor':'center'})
     return fig
 
-#---------------------------------------------------------------
-# For tutorial purposes to show the user the search_value
+# app.layout = html.Div([
+#     html.Button('Submit', id='submit-val', n_clicks=0),
+#     html.Div(id='container-button-basic',
+#              children='submit')
+# ])
+# @app.callback(
+#     Output('container-button-basic', 'children'),
+#     Input('submit-val', 'n_clicks'),
+#     State('input-on-submit', 'value')
+# )
 
-
-#---------------------------------------------------------------
+# def update_output(n_clicks, value):
+#     return 'The input value was "{}" and the button has been clicked {} times'.format(
+#         value,
+#         n_clicks
+#     )
 
 if __name__ == '__main__':
     app.run_server(debug=True)
