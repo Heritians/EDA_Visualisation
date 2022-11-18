@@ -1,18 +1,23 @@
+import os
+import json
 import requests
-from .signin import get_access_token,BASE_URL
+from functools import lru_cache
+
 from dotenv import load_dotenv
 load_dotenv()
-import json
+
 import pandas as pd
 
+from .signin import get_access_token,BASE_URL
 
+@lru_cache()
 def fetch_data_fromdb(village_name):
     url = BASE_URL + "/api/get_data"
     signincred = {
-        "AADHAR_NO": "EDA",
-        "password": "string",
-        "village_name": "None",
-        "role": "GOVTOff"
+        "AADHAR_NO": os.getenv("AADHAR_NO"),
+        "password": os.getenv("PASSWORD"),
+        "village_name": os.getenv("VILLAGE_NAME"),
+        "role": os.getenv("ROLE")
     }
     params = {"village_name": f"{village_name}"}
     headers = {
