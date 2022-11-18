@@ -1,8 +1,6 @@
 import requests
-from dotenv import load_dotenv
-load_dotenv()
-import json
-import pandas as pd
+# from dotenv import load_dotenv
+# load_dotenv()
 
 BASE_URL = "https://ubaformapi-qyaec74aq-fastapis-build.vercel.app"
 
