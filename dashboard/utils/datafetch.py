@@ -1,7 +1,6 @@
 import os
 import json
 import requests
-from functools import lru_cache
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -10,7 +9,7 @@ import pandas as pd
 
 from .signin import get_access_token,BASE_URL
 
-@lru_cache()
+
 def fetch_data_fromdb(village_name):
     url = BASE_URL + "/api/get_data"
     signincred = {

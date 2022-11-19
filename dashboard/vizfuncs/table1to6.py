@@ -4,10 +4,9 @@ from dash.dependencies import Input, Output
 
 import numpy as np
 import plotly.graph_objects as go
-import matplotlib.pyplot as plt
 
 from app import app
-from ..utils.parseresponsejson import DATA
+from ..utils.parseresponsejson import get_data
 
 
 layout=html.Div([
@@ -22,6 +21,8 @@ layout=html.Div([
 @app.callback(Output("agri_prod","figure"),
               [Input('village_name', 'value')])
 def agri_products(village_name):
+    # print(village_name)
+    DATA=get_data(village_name)
     data=np.unique(DATA[village_name]['agri_products']['crop_name'].values)
     data=dict.fromkeys(data,0)
     for i in range(len(DATA[village_name]['agri_products']['crop_name'].values)):
@@ -33,4 +34,5 @@ def agri_products(village_name):
                       plot_bgcolor='rgba(0,0,0,0)',
                       template = "seaborn",
                       margin=dict(t=0))
+    # print(len(DATA[village_name]['agri_products']['crop_name'].values))                  
     return fig               

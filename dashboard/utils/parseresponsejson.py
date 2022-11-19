@@ -1,5 +1,6 @@
-import pprint
 import pandas as pd
+
+from functools import lru_cache
 
 from .datafetch import fetch_data_fromdb
 
@@ -8,12 +9,11 @@ TABLE_NAMES = ["respondent_prof","gen_ho_info","fam_info","mig_status","govt_sch
 "source_of_energy","land_holding_info","agri_inputs","agri_products","livestock_nos","major_problems"]
 
 #dict of dict of tables
-
-data = fetch_data_fromdb("Sehore") # ["Aastha", "Sehore", "string"]
-"""data_json = json.dumps(data['data'])
-df = pd.DataFrame(data["data"]["fam_info"])"""
-
-DATA = {village:{table:pd.DataFrame(data['data'][table])for table in TABLE_NAMES} for village in VILLAGE_NAMES}
+@lru_cache()
+def get_data(village_name):
+    data = fetch_data_fromdb(village_name) # ["Aastha", "Sehore", "string"]
+    DATA = {village:{table:pd.DataFrame(data['data'][table])for table in TABLE_NAMES} for village in VILLAGE_NAMES}
+    return DATA
 
 
 # pprint.pprint(DATA) 
