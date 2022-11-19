@@ -6,30 +6,25 @@ from app import server
 from app import app
 
 from dashboard.vizfuncs import table1to6
+from dashboard.utils.parseresponsejson import VILLAGE_NAMES
 
-dropdown = dbc.DropdownMenu(
-    children=[
-        dbc.DropdownMenuItem("Home", href="/home"),
-        dbc.DropdownMenuItem("Sehore", href="/Sehore"),
-        dbc.DropdownMenuItem("Aastha", href="/Aastha"),
-        dbc.DropdownMenuItem("Kothri", href="/Kothri"),
-    ],
-    nav = True,
-    in_navbar = True,
-    label = "Explore",
-)
+dropdown=dcc.Dropdown(
+        id='village_name',
+        options=[{"label":i,"value":i} for i in VILLAGE_NAMES],
+        value="Sehore",
+        multi=False,
+        style={'width': '70%', 'margin-left': '5px'}
+    )
 
 app.layout = html.Div([
-    dcc.Location(id='village_name', refresh=False),
     dropdown,
     html.Div(id='page-content')
 ])
 
 @app.callback(Output('page-content', 'children'),
-              [Input('village_name', 'pathname')])
+              [Input('village_name', 'value')])
 def display_page(pathname):
-    if pathname == '/Sehore':
-        return table1to6.layout
+    return table1to6.layout    
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True,use_reloader=True)
