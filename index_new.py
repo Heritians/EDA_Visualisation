@@ -7,7 +7,7 @@ import pandas as pd
 from app import server
 from app import app
 
-from dashboard.vizfuncs import table1to6
+from dashboard.vizfuncs import table1to6new
 from dashboard.utils.parseresponsejson import VILLAGE_NAMES,get_data, DATA
 
 dropdown=dcc.Dropdown(
