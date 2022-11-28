@@ -5,7 +5,6 @@ import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from urllib.request import urlopen
 import json
 import dash
 from dash import Dash,dcc,html
@@ -28,6 +27,22 @@ layout = go.Layout(barmode='overlay',
 )
 fig = go.Figure(data=data, layout=layout)
 
+## govt schemes
+schemes = pd.read_csv("datasets\schemes.csv")
+use_col = ['PM_jan_dhan_yojana', 'PM_ujjawala_yojana', 'PM_awas_yojana',
+       'sukanya_samriddhi_yojana', 'mudra_yojana', 'PM_jivan_jyoti_yojana',
+       'PM_suraksha_bima_yojana', 'atal_pension_yojana', 'fasal_bima_yojana',
+       'kaushal_vikas_yojana', 'krishi_sinchai_yojana', 'jan_aushadhi_yojana',
+       'SBM_toilet', 'soil_health_card', 'ladli_lakshmi_yojana',
+       'janni_suraksha_yojana', 'kisan_credit_card']
+
+schemes = pd.read_csv("datasets\schemes.csv", usecols = use_col)
+
+index = schemes.sum().index.tolist()
+val = schemes.sum().values.tolist()
+figure = px.pie(values = val, names=index)
+#********************************************************/
+
 app.layout = dbc.Container(
     [
         dbc.Row(
@@ -40,14 +55,15 @@ app.layout = dbc.Container(
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    dcc.Dropdown(['Gender', 'Category', 'Poverty Status','House Type',
-                                    'Sanitation','Drainage','Waste Collection'], 'Category', id='demo-dropdown'),
+                                    dcc.Dropdown(['hoh_gender','category','pov_status',
+                                    'own_house','house_type','toilet','drainage_status','waste_collection_sys',
+                                    ], 'hoh_gender', id='demo-dropdown'),
                                     #dcc.Markdown("""### Select the no of counties to visualize"""),
                                     width=8,
                                 )
                             ]
                         ),
-                        dcc.Graph(id="dd-output-container",figure=fig),
+                        dcc.Graph(id="dd-output-container")#,figure=fig),
                     ],
                     width=6,
                 ),
@@ -152,20 +168,19 @@ app.layout = dbc.Container(
     className="dbc",
 )
 
-if __name__ == "__main__":
-    app.run(debug=True)
 
 @app.callback(
-    Output('demo-dropdown', 'figure'),
-    Input('dd-output-container', 'value'))
+    Output('dd-output-container', 'figure'),
+    [Input('demo-dropdown', 'value')]
+    )
 
-def update_figure(selected_column):
-    filtered_df = df[[f"{selected_column}"]]
-
-    fig = px.scatter(filtered_df, x="gdpPercap", y="lifeExp",
-                     size="pop", 
-                     log_x=True, size_max=55)
-
-    fig.update_layout(transition_duration=500)
+def update_figure(value):
+    #print(f'You have selected {value}')
+    filtered_df = df[value]
+    #filtered_df = df["age"]]
+    fig = go.Figure(px.histogram(filtered_df))
 
     return fig
+
+if __name__ == "__main__":
+    app.run(debug=True)
