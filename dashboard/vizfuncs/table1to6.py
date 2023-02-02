@@ -43,7 +43,6 @@ layout=html.Div([
                         dbc.Row(
                             [
                                 dbc.Col(
-                                
                                 )
                             ]
                         ),
@@ -116,12 +115,17 @@ layout=html.Div([
                         dcc.Markdown("""## AGRICULTURAL PRODUCE """),
                         dbc.Row(),
                         dcc.Graph(id="agriprod"),
-                    ],
-                    width=6,
+                    ],style={
+                        'backgroundColor': 'yellow',
+                        'width': '40%',
+                    }
                 ),
             ]
         ),
-    ])
+    ],style={
+        'backgroundColor': 'grey',
+        'border': '1px solid red',
+    },)
 
 # print(DATA["Sehore"]['agri_products']['crop_name'].values)
 @app.callback(Output("gen_household","figure"),
@@ -239,7 +243,7 @@ def govt_scheme(village_name):
 
 def govt_scheme(village_name):
     agri = DATA[village_name]["agri_products"]
-    print(agri)
+    #print(agri)
     return px.scatter(agri, x="crop_area_prev_yr_acre", y="productivity_in_quintals_per_acre", color="crop_name",size="productivity_in_quintals_per_acre")
 
     
