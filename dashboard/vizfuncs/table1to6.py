@@ -16,25 +16,33 @@ from ..utils.parseresponsejson import DATA
 layout=html.Div([
     dbc.Row(
         [
-        dbc.Col([
-            dcc.Graph(id="gen_household"),
-            ])
+        #dbc.Col([dcc.Graph(id="gen_household"),]),
         ]
         ),
         html.Br(),
 
         dbc.Row(
             [
-                dcc.Markdown("""##  GEN HOUSEHOLD INFO """),
+                
                 dbc.Col(
                     [
+                        dcc.Markdown("""##  GEN HOUSEHOLD INFO """),
                         dbc.Row(
                             [dcc.Dropdown(['hoh_gender','category','pov_status',
                                     'own_house','house_type','toilet','drainage_status','waste_collection_sys',
                                     ], 'hoh_gender', id='column_name'),]
                         ),
                         dcc.Graph(id="hist"),
-                    ],
+                    ],style={
+                        
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginLeft':'3%',
+                        'marginRight':'2%',
+                    },
                     width=6,
                 ),
                 dbc.Col(
@@ -48,18 +56,29 @@ layout=html.Div([
                         ),
                         dcc.Graph(id="landholding"),
                     ],
+                    style={
+
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginRight':'3%',
+                        'marginLeft':'2%',                        
+                    },
                     width=6,
                 ),
-            ]
+            ],style={'marginTop':'25px',
+                        'marginBottom':'25px',}
         ),
 
         html.Br(),
 
         dbc.Row(
             [
-                dcc.Markdown("""## FAMILY MEMBER INFO """),
                 dbc.Col(
                     [
+                        dcc.Markdown("""## FAMILY MEMBER INFO """),
                         dbc.Row(
                             [dcc.Dropdown(['sex', 'martial_status', 'education',
                                           'schooling_status', 'AADHAR_No', 'has_bank_acc', 'is_computer_literate',
@@ -68,6 +87,16 @@ layout=html.Div([
                         ),
                         dcc.Graph(id="family"),
                     ],
+                    style={
+                        
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginLeft':'3%',
+                        'marginRight':'2%',
+                    },
                     width=6,
                 ),
                 dbc.Col(
@@ -93,22 +122,42 @@ layout=html.Div([
                         ),
                         dcc.Graph(id="output_data"),
                     ],
+                    style={
+
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginRight':'3%',
+                        'marginLeft':'2%',                        
+                    },
                     width=6,
                 ),
-            ]
+            ],style={'marginTop':'25px',
+                        'marginBottom':'25px',}
         ),
         html.Br(),
 
         dbc.Row(
             [
-                dcc.Markdown("""## GOVT SCHEME INFO """),
+                
                 dbc.Col(
                     [
-                        dbc.Row(
-                        ),
+                        dcc.Markdown("""## GOVT SCHEME INFO """),
+                        dbc.Row(),
                         dcc.Graph(id="govt_schemes"),
                     ],
-                    width=6,
+                    style={
+                        
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginLeft':'3%',
+                        'marginRight':'2%',
+                    },
                 ),
                 dbc.Col(
                     [
@@ -116,15 +165,21 @@ layout=html.Div([
                         dbc.Row(),
                         dcc.Graph(id="agriprod"),
                     ],style={
-                        'backgroundColor': 'yellow',
-                        'width': '40%',
-                    }
+                        'width': '45%',
+                        'box-shadow': '20px 20px 20px 20px #f7f7f7',
+                        'textAlign':'center',
+                        'paddingTop':'20px',
+                        'border-radius':'10px',
+                        'marginRight':'3%',
+                        'marginLeft':'2%',  
+                    },
                 ),
-            ]
+            ],style={'marginTop':'25px',
+                        'marginBottom':'25px',}
         ),
     ],style={
-        'backgroundColor': 'grey',
-        'border': '1px solid red',
+        'backgroundColor': 'white',
+        
     },)
 
 # print(DATA["Sehore"]['agri_products']['crop_name'].values)
@@ -232,7 +287,7 @@ def govt_scheme(village_name):
             'values': val}
     df = pd.DataFrame(data)
 
-    go_scheme = px.treemap(df, path=['labels'],values='values', width=700, height=400)
+    go_scheme = px.treemap(df, path=['labels'],values='values')
     return go_scheme
 
 ## agri product
