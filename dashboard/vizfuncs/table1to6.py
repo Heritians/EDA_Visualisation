@@ -35,7 +35,7 @@ layout=html.Div([
                         dcc.Graph(id="hist"),
                     ],style={
                         
-                        'width': '45%',
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -58,7 +58,7 @@ layout=html.Div([
                     ],
                     style={
 
-                        'width': '45%',
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -68,14 +68,6 @@ layout=html.Div([
                     },
                     width=6,
                 ),
-            ],style={'marginTop':'25px',
-                        'marginBottom':'25px',}
-        ),
-
-        html.Br(),
-
-        dbc.Row(
-            [
                 dbc.Col(
                     [
                         dcc.Markdown("""## FAMILY MEMBER INFO """),
@@ -89,7 +81,7 @@ layout=html.Div([
                     ],
                     style={
                         
-                        'width': '45%',
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -98,7 +90,15 @@ layout=html.Div([
                         'marginRight':'2%',
                     },
                     width=6,
-                ),
+                )
+            ],style={'marginTop':'25px',
+                        'marginBottom':'25px',}
+        ),
+
+        html.Br(),
+
+        dbc.Row(
+            [
                 dbc.Col(
                     [
                         dcc.Markdown("""## ENERGY AND POWER  """),
@@ -123,8 +123,7 @@ layout=html.Div([
                         dcc.Graph(id="output_data"),
                     ],
                     style={
-
-                        'width': '45%',
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -134,23 +133,14 @@ layout=html.Div([
                     },
                     width=6,
                 ),
-            ],style={'marginTop':'25px',
-                        'marginBottom':'25px',}
-        ),
-        html.Br(),
-
-        dbc.Row(
-            [
-                
                 dbc.Col(
                     [
                         dcc.Markdown("""## GOVT SCHEME INFO """),
                         dbc.Row(),
                         dcc.Graph(id="govt_schemes"),
                     ],
-                    style={
-                        
-                        'width': '45%',
+                    style={ 
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -165,7 +155,7 @@ layout=html.Div([
                         dbc.Row(),
                         dcc.Graph(id="agriprod"),
                     ],style={
-                        'width': '45%',
+                        'width': '25%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
@@ -174,6 +164,12 @@ layout=html.Div([
                         'marginLeft':'2%',  
                     },
                 ),
+            ],style={'marginTop':'25px',
+                        'marginBottom':'25px',}
+        ),
+        html.Br(),
+        dbc.Row(
+            [   
             ],style={'marginTop':'25px',
                         'marginBottom':'25px',}
         ),
@@ -256,7 +252,7 @@ def family_graph(village_name,chosen_column):
 )  
 def energy_graph(village_name,column_chosen):
     energy = DATA[village_name]["source_of_energy"][column_chosen]
-    fig = px.pie(energy,names=column_chosen,width=600, height=480)
+    fig = px.pie(energy,names=column_chosen,width=500, height=380)
     fig.update_traces(textinfo='percent+label')
     return fig
 
