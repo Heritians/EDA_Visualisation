@@ -9,6 +9,8 @@ from app import app
 
 from dashboard.vizfuncs import table1to6
 from dashboard.utils.parseresponsejson import VILLAGE_NAMES,get_data, DATA
+import sys
+print(sys.executable)
 
 dropdown=dcc.Dropdown(
         id='village_name',
