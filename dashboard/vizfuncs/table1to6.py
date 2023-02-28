@@ -35,13 +35,14 @@ layout=html.Div([
                         dcc.Graph(id="hist"),
                     ],style={
                         
-                        'width': '25%',
+                        'width': '29%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
+                        'height':'19%',
                         'border-radius':'10px',
-                        'marginLeft':'3%',
-                        'marginRight':'2%',
+                        'marginLeft':'2%',
+                        'marginRight':'1%',
                     },
                     width=6,
                 ),
@@ -58,13 +59,13 @@ layout=html.Div([
                     ],
                     style={
 
-                        'width': '25%',
+                        'width': '29%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
                         'border-radius':'10px',
-                        'marginRight':'3%',
-                        'marginLeft':'2%',                        
+                        'marginRight':'2%',
+                        'marginLeft':'1%',                        
                     },
                     width=6,
                 ),
@@ -81,13 +82,13 @@ layout=html.Div([
                     ],
                     style={
                         
-                        'width': '25%',
+                        'width': '30%',
                         'box-shadow': '20px 20px 20px 20px #f7f7f7',
                         'textAlign':'center',
                         'paddingTop':'20px',
                         'border-radius':'10px',
-                        'marginLeft':'3%',
-                        'marginRight':'2%',
+                        'marginLeft':'2%',
+                        'marginRight':'1%',
                     },
                     width=6,
                 )
@@ -254,6 +255,7 @@ def energy_graph(village_name,column_chosen):
     energy = DATA[village_name]["source_of_energy"][column_chosen]
     fig = px.pie(energy,names=column_chosen,width=500, height=380)
     fig.update_traces(textinfo='percent+label')
+    fig.update_layout(showlegend=False)
     return fig
 
 ## govt schemes
