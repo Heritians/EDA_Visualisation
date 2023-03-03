@@ -13,68 +13,62 @@ from app import app
 from ..utils.parseresponsejson import DATA
 
 
-layout=html.Div([
+
+
+layout=html.Div(style={'color':'black'},children=[
+    
+    html.Br(),
     dbc.Row(
         [
-        dbc.Col([
+            html.Div(className='card',children=[dbc.Col([
+            #html.H2('General Household')
             dcc.Graph(id="gen_household"),
-            ])
+            ])])
+        
         ]
         ),
         html.Br(),
-
-        dbc.Row(
-            [
-                dcc.Markdown("""##  GEN HOUSEHOLD INFO """),
-                dbc.Col(
-                    [
-                        dbc.Row(
-                            [dcc.Dropdown(['hoh_gender','category','pov_status',
-                                    'own_house','house_type','toilet','drainage_status','waste_collection_sys',
-                                    ], 'hoh_gender', id='column_name'),]
-                        ),
-                        dcc.Graph(id="hist"),
-                    ],
-                    width=6,
-                ),
-                dbc.Col(
-                    [
-                        dcc.Markdown("""## LANDHOLDING DISTRIBUTION """),
-                        dbc.Row(
-                            [
-                                dbc.Col(
-                                
-                                )
-                            ]
-                        ),
-                        dcc.Graph(id="landholding"),
-                    ],
-                    width=6,
-                ),
-            ]
-        ),
-
         html.Br(),
 
         dbc.Row(
             [
-                dcc.Markdown("""## FAMILY MEMBER INFO """),
                 dbc.Col(
+                    
                     [
+                        html.H2('FAMILY MEMBER INFO', className='h2'),
+                        html.Div([#dcc.Markdown("""## FAMILY MEMBER INFO """),
+                        
                         dbc.Row(
-                            [dcc.Dropdown(['sex', 'martial_status', 'education',
+                            [
+                                
+                                dcc.Dropdown(['sex', 'martial_status', 'education',
                                           'schooling_status', 'AADHAR_No', 'has_bank_acc', 'is_computer_literate',
                                           'has_SSP', 'health_prob', 'has_MNREGA', 'SHG', 'occupations'], 'sex', id='family-dropdown'),
                             ]
                         ),
-                        dcc.Graph(id="family"),
+                        dcc.Graph(id="family"),], className='card'),
+                        
                     ],
-                    width=6,
+                    width=4,
+                ),
+                dbc.Col(
+                    [
+                        html.H2('GEN HOUSEHOLD INFO', className='h2'),
+                        #dcc.Markdown("""##  GEN HOUSEHOLD INFO """), 
+                        html.Div([dbc.Row(
+                            [dcc.Dropdown(['hoh_gender','category','pov_status',
+                                    'own_house','house_type','toilet','drainage_status','waste_collection_sys',
+                                    ], 'hoh_gender', id='column_name'),]
+                        ),
+                        dcc.Graph(id="hist"),], className='card')  
+                        
+                    ],
+                    width=4,
                 ),
                 dbc.Col(
                     [
                         dcc.Markdown("""## ENERGY AND POWER  """),
-                        dbc.Row(
+                        html.Div([dbc.Row(
                             [
                                 dcc.Dropdown(id='energy_pow',options=[
                                     {'label': 'Connections', 'value': 'electricity_conn'},
@@ -92,35 +86,51 @@ layout=html.Div([
                             ),
                             ]
                         ),
-                        dcc.Graph(id="output_data"),
+                        dcc.Graph(id="output_data"),], className='card')
+                        
                     ],
-                    width=6,
+                    width=4,
                 ),
+                
             ]
         ),
+
+        html.Br(),
         html.Br(),
 
         dbc.Row(
             [
-                dcc.Markdown("""## GOVT SCHEME INFO """),
+                
+                
                 dbc.Col(
                     [
-                        dbc.Row(
-                        ),
-                        dcc.Graph(id="govt_schemes"),
+                        dcc.Markdown("""## LANDHOLDING DISTRIBUTION """),
+                        html.Div([dcc.Graph(id="landholding"),], className='card')
+                        
                     ],
-                    width=6,
+                    width=4,
+                ),
+                dbc.Col(
+                    [
+                        dcc.Markdown("""## GOVT SCHEME INFO """),
+                        html.Div([dcc.Graph(id="govt_schemes"),], className='card')
+                        
+                    ],
+                    width=4,
                 ),
                 dbc.Col(
                     [
                         dcc.Markdown("""## AGRICULTURAL PRODUCE """),
-                        dbc.Row(),
-                        dcc.Graph(id="agriprod"),
+                        html.Div([dcc.Graph(id="agriprod"),], className='card')
+                        
                     ],
-                    width=6,
+                    width=4,
                 ),
+                
             ]
         ),
+        html.Br()
+
     ])
 
 # print(DATA["Sehore"]['agri_products']['crop_name'].values)
@@ -137,10 +147,10 @@ def agri_products(village_name):
     fig=go.Figure(data=[
         go.Bar(name='Crops', x=list(data.keys()), y=list(data.values())),
     ])
-    fig.update_layout(paper_bgcolor='rgba(0,0,0,0)',
-                      plot_bgcolor='rgba(0,0,0,0)',
-                      template = "seaborn",
-                      margin=dict(t=0))
+    #fig.update_layout(paper_bgcolor='rgba(255,125,115,215)',
+     #                 plot_bgcolor='rgba(45,56,67,78)',
+      #                template = "seaborn",
+       #               margin=dict(t=0))
     # print(len(DATA[village_name]['agri_products']['crop_name'].values))                  
     return fig               
 
@@ -158,6 +168,10 @@ def gen_ho_info(village_name,column_name):
 
     #filtered_df = df["age"]]
     fig = go.Figure(px.histogram(gen_vis))
+    #fig.update_layout(paper_bgcolor='rgb(174, 238, 228 )',
+     #                 plot_bgcolor='rgb(51, 255, 224)',
+      #                template = "seaborn",
+       #               margin=dict(t=0))
 
     return fig
 
@@ -174,7 +188,8 @@ def land_holding_info(village_name):
     index = land.sum().index.tolist()
     val = land.sum().values.tolist()
 
-    landhold = px.pie(values = val, names=index,hole=0.5)
+    landhold = go.Figure(px.pie(values = val, names=index,hole=0.5))
+    landhold.update_layout(margin=dict(t=30))
     return landhold
 
 ## family member information
@@ -186,7 +201,11 @@ def land_holding_info(village_name):
 
 def family_graph(village_name,chosen_column):
     familydf = DATA[village_name]["fam_info"][chosen_column]
-    fig = go.Figure(px.bar(familydf, x=chosen_column))
+    fig = go.Figure(px.bar(familydf, x=chosen_column, color=chosen_column))
+    #fig.update_layout(paper_bgcolor='rgb(174, 238, 228 )',
+     #                 plot_bgcolor='rgb(51, 255, 224)',
+      #                template = "seaborn",
+       #               margin=dict(t=0))
     return fig
 
 ## energy and power
@@ -197,7 +216,7 @@ def family_graph(village_name,chosen_column):
 )  
 def energy_graph(village_name,column_chosen):
     energy = DATA[village_name]["source_of_energy"][column_chosen]
-    fig = px.pie(energy,names=column_chosen,width=600, height=480)
+    fig = px.pie(energy,names=column_chosen)
     fig.update_traces(textinfo='percent+label')
     return fig
 
@@ -228,7 +247,7 @@ def govt_scheme(village_name):
             'values': val}
     df = pd.DataFrame(data)
 
-    go_scheme = px.treemap(df, path=['labels'],values='values', width=700, height=400)
+    go_scheme = px.treemap(df, path=['labels'],values='values')
     return go_scheme
 
 ## agri product

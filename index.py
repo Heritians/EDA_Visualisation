@@ -15,11 +15,24 @@ dropdown=dcc.Dropdown(
         options=[{"label":i,"value":i} for i in VILLAGE_NAMES],
         value="Sehore",
         multi=False,
-        style={'width': '70%', 'margin-left': '5px'}
+        style={'width': '70%', 'margin-left': '1px', }
     )
 
 app.layout = html.Div([
+    html.Div([
+    dbc.Row([
+    dbc.Col([dbc.CardImg(src = 'assets\logo_sm.png', top = True),
+    ], width=1),
+    dbc.Col([
+    html.Br(),
+    html.Br(),
+    html.H1('Connecting Villages - EDA Dashboard')
+    ]),
+    ]),
     dropdown,
+    ], className='header'),
+    html.Br(),
+    html.Br(),
     html.Div(id='page-content')
 ])
 
