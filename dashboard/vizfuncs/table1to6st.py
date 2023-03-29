@@ -34,7 +34,7 @@ col1,col2,col3 = st.columns(3)
 with col1:
    st.write("Family Member Info")
    chosen_column = st.selectbox('Select condition : ',('sex', 'martial_status','schooling_status','has_bank_acc', 'is_computer_literate','has_SSP', 'health_prob', 'has_MNREGA', 'SHG'))
-   familydf = DATA[f'{village_name}']["fam_info"][chosen_column]
+   familydf = DATA[village_name]["fam_info"][chosen_column]
    fig = go.Figure(px.bar(familydf, x=chosen_column, color=chosen_column))
    
    fig.update_layout(paper_bgcolor='rgb(0,0,0)',
